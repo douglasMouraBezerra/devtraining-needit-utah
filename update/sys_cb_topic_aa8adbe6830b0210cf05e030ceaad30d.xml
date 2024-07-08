@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_cb_topic">
+    <sys_cb_topic action="INSERT_OR_UPDATE">
+        <applicability/>
+        <applicability_mode>query</applicability_mode>
+        <autopilot_topic>false</autopilot_topic>
+        <category>5ca81c5a7331201083c1e0dbc4f6a7f8</category>
+        <channels/>
+        <connect_queue/>
+        <context_profiles/>
+        <description>Conversation for resolving an incident. This topic is used for actionable notifications.</description>
+        <dialog_acts_enabled>false</dialog_acts_enabled>
+        <expose_on_palette>false</expose_on_palette>
+        <flexible_conversation_switching>false</flexible_conversation_switching>
+        <foundational>false</foundational>
+        <graph>{
+  "graph_api_version": "1.0.66",
+  "goals": {
+    "primary": {
+      "id": "primary",
+      "trigger": {
+        "type": "primary"
+      },
+      "name": "primary",
+      "applicability": "",
+      "description": "",
+      "nodes": {
+        "729ec787fe2f458a9156868fc2e4d20b": {
+          "id": "729ec787fe2f458a9156868fc2e4d20b",
+          "stepType": "Start",
+          "name": "Start",
+          "greetingResponse": {
+            "mode": "simple",
+            "value": ""
+          }
+        },
+        "c34a789502f44bbc832ad0eec9527e49": {
+          "id": "c34a789502f44bbc832ad0eec9527e49",
+          "stepType": "TerminateGoal",
+          "name": "End",
+          "confirmationMessage": {
+            "mode": "simple",
+            "value": ""
+          }
+        },
+        "0397f3fd13e5477eb766ee3f5e3cf669": {
+          "id": "0397f3fd13e5477eb766ee3f5e3cf669",
+          "name": "Get incident sys_id",
+          "script": "(function execute() {\n    vaVars.incident_sys_id = JSON.parse(vaVars.global_notification_context.toString())['tableSysId'] ;\n})()\n",
+          "stepType": "ScriptAction",
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          }
+        },
+        "bafd96be443d4492b72aec31471311c4": {
+          "id": "bafd96be443d4492b72aec31471311c4",
+          "stepType": "TextOutput",
+          "name": "Update message",
+          "secure": false,
+          "value": [
+            {
+              "value": "(function execute() {\n    var number = vaInputs.lookup_incident.number;\n    if(number){\n        var linkToIncident = '**[' + number + '](' + gs.getProperty('glide.servlet.uri') + vaVars.portalName + '?sys_id=' + vaVars.incident_sys_id + '&amp;id=ticket&amp;table=incident' + ')**';\n        return gs.getMessageLang(\"OK, I've resolved {0}.\", vaVars.requesterLang, [linkToIncident]);\n    }\n    return '';\n})()\n",
+              "mode": "script"
+            }
+          ],
+          "applicability": {
+            "mode": "query",
+            "value": ""
+          },
+          "requestFeedback": true
+        },
+        "6656323492f643f48439900069aae044": {
+          "id": "6656323492f643f48439900069aae044",
+          "stepType": "LookupRecord",
+          "name": "Lookup incident",
+          "condition": {
+            "mode": "glide_query",
+            "value": "sys_id={{vaVars.incident_sys_id}}"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "variableId": "f60a8742c3484b77a8fd94d75ba716bd"
+        },
+        "0df5538060934688afdb1948480e747b": {
+          "id": "0df5538060934688afdb1948480e747b",
+          "stepType": "Decision",
+          "name": "Decision"
+        },
+        "d865252c443d41e78e4f8eb2d7afdebc": {
+          "id": "d865252c443d41e78e4f8eb2d7afdebc",
+          "stepType": "CrudAction",
+          "name": "Update incident",
+          "template": {
+            "queryString": "state=6"
+          },
+          "mode": "update",
+          "record": "f60a8742c3484b77a8fd94d75ba716bd",
+          "applicability": {
+            "mode": "query",
+            "value": ""
+          },
+          "variableId": "9da9d546d44b404ba6231a20c6bb24c3"
+        },
+        "4c9be071f185437498662898e065106b": {
+          "id": "4c9be071f185437498662898e065106b",
+          "stepType": "TextOutput",
+          "name": "Updated already",
+          "secure": false,
+          "value": [
+            {
+              "value": "(function execute() {\n    var number = vaInputs.lookup_incident.number;\n    if(number){\n        var linkToIncident = '**[' + number + '](' + gs.getProperty('glide.servlet.uri') + vaVars.portalName + '?sys_id=' + vaVars.incident_sys_id + '&amp;id=ticket&amp;table=incident' + ')**';\n        return gs.getMessageLang(\"OK, {0} is already {1}.\", vaVars.requesterLang, [linkToIncident, vaInputs.lookup_incident.incident_state.getDisplayValue()]);\n    }\n    return '';\n})()\n\n",
+              "mode": "script"
+            }
+          ],
+          "applicability": {
+            "mode": "script",
+            "value": "(function execute() {\n    return (vaInputs.lookup_incident.state &gt;= '6');\n})()\n"
+          },
+          "requestFeedback": true
+        },
+        "c9336746a7244ffda77eb0c578d55240": {
+          "id": "c9336746a7244ffda77eb0c578d55240",
+          "stepType": "Component",
+          "name": "Log (deflection): Info Provided to User",
+          "fields": [],
+          "reusableTopicId": "7fb4ca055303201033cdddeeff7b12b3",
+          "reusableTopicChoice": "Deflection",
+          "sourceType": "TOPIC_BLOCK",
+          "loading": false,
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "inputs": {
+            "deflection_configuration": {
+              "value": "5292005253213010000dddeeff7b126c",
+              "mode": "string",
+              "type": "Reference",
+              "table": "ssa_deflection_configuration"
+            },
+            "deflection_pattern": {
+              "value": "bd12391e5331011061a8ddeeff7b12ba",
+              "mode": "string",
+              "type": "Reference",
+              "table": "ssa_deflection_pattern"
+            },
+            "activity_table": {
+              "value": "",
+              "mode": "simple",
+              "type": "String"
+            },
+            "activity_ids": {
+              "value": "",
+              "mode": "simple",
+              "type": "String"
+            }
+          },
+          "outputs": [],
+          "outdatedNote": false,
+          "variableIds": []
+        },
+        "37c52ac6a8004ed5b85f61c54bb2cd91": {
+          "id": "37c52ac6a8004ed5b85f61c54bb2cd91",
+          "stepType": "Component",
+          "name": "Log (deflection): User Task Complete",
+          "fields": [],
+          "reusableTopicId": "7fb4ca055303201033cdddeeff7b12b3",
+          "reusableTopicChoice": "Deflection",
+          "sourceType": "TOPIC_BLOCK",
+          "loading": false,
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "inputs": {
+            "deflection_configuration": {
+              "value": "5292005253213010000dddeeff7b126c",
+              "mode": "string",
+              "type": "Reference",
+              "table": "ssa_deflection_configuration"
+            },
+            "deflection_pattern": {
+              "value": "59d1391e5331011061a8ddeeff7b12af",
+              "mode": "string",
+              "type": "Reference",
+              "table": "ssa_deflection_pattern"
+            },
+            "activity_table": {
+              "value": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "text": "incident"
+                    }
+                  ]
+                }
+              ],
+              "mode": "string",
+              "type": "String"
+            },
+            "activity_ids": {
+              "value": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "text": ""
+                    },
+                    {
+                      "type": "datapill",
+                      "dataPill": {
+                        "value": "{{vaVars.incident_sys_id}}",
+                        "displayValue": "Script Variables➛incident_sys_id"
+                      },
+                      "children": [
+                        {
+                          "text": ""
+                        }
+                      ]
+                    },
+                    {
+                      "text": ""
+                    }
+                  ]
+                }
+              ],
+              "mode": "string",
+              "type": "String"
+            }
+          },
+          "outputs": [],
+          "outdatedNote": false,
+          "variableIds": []
+        }
+      },
+      "edges": [
+        {
+          "id": "b89517d63fb449f68bd9b77991ea2bfb",
+          "edgeType": "Edge",
+          "source": "6656323492f643f48439900069aae044",
+          "target": "0df5538060934688afdb1948480e747b",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "ad10afa2fd3747b593eb1afd80e3a19b",
+          "edgeType": "Edge",
+          "source": "729ec787fe2f458a9156868fc2e4d20b",
+          "target": "0397f3fd13e5477eb766ee3f5e3cf669",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "9b98673b1d104440b3d982b161e5de06",
+          "edgeType": "Edge",
+          "source": "0397f3fd13e5477eb766ee3f5e3cf669",
+          "target": "6656323492f643f48439900069aae044",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "afe6aa5d3490468eb8309a4865c7788f",
+          "edgeType": "Branch",
+          "source": "0df5538060934688afdb1948480e747b",
+          "target": "d865252c443d41e78e4f8eb2d7afdebc",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n    return !(vaInputs.lookup_incident.state &gt;= '6')\n})()\n\n"
+          },
+          "label": "Not Resolved"
+        },
+        {
+          "id": "e998d455e9f4451eb05a58ee28b94099",
+          "edgeType": "Edge",
+          "source": "d865252c443d41e78e4f8eb2d7afdebc",
+          "target": "bafd96be443d4492b72aec31471311c4",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "ebe7b0aa4893495a8df59418a3dd1616",
+          "edgeType": "Branch",
+          "source": "0df5538060934688afdb1948480e747b",
+          "target": "4c9be071f185437498662898e065106b",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n    return (vaInputs.lookup_incident.state &gt;= '6')\n})()\n\n"
+          },
+          "label": "Updated already"
+        },
+        {
+          "id": "c936769ff96347e9a4a79a2aa059e836",
+          "edgeType": "Edge",
+          "source": "4c9be071f185437498662898e065106b",
+          "target": "c9336746a7244ffda77eb0c578d55240",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "5409eda5ed624992a4f1d01eb5b4e56e",
+          "edgeType": "Edge",
+          "source": "c9336746a7244ffda77eb0c578d55240",
+          "target": "c34a789502f44bbc832ad0eec9527e49",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "a77143cd6e5e492dbfc42ff41a6c7202",
+          "edgeType": "Edge",
+          "source": "bafd96be443d4492b72aec31471311c4",
+          "target": "37c52ac6a8004ed5b85f61c54bb2cd91",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "f562e3c9fdfa4d0ea92ea857865453b6",
+          "edgeType": "Edge",
+          "source": "37c52ac6a8004ed5b85f61c54bb2cd91",
+          "target": "c34a789502f44bbc832ad0eec9527e49",
+          "sourcePort": "",
+          "targetPort": ""
+        }
+      ]
+    }
+  },
+  "variables": {
+    "98e2d5c7824d4226ba68c5951a1eba51": {
+      "category": "vaInputs",
+      "id": "98e2d5c7824d4226ba68c5951a1eba51",
+      "label": "User",
+      "name": "user",
+      "table": "sys_user",
+      "varType": "reference"
+    },
+    "4382045119814102bb5b71488b7f7168": {
+      "id": "4382045119814102bb5b71488b7f7168",
+      "value": {
+        "mode": "simple",
+        "value": ""
+      },
+      "name": "incident_sys_id",
+      "label": "incident_sys_id",
+      "varType": "script",
+      "category": "vaVars"
+    },
+    "f60a8742c3484b77a8fd94d75ba716bd": {
+      "id": "f60a8742c3484b77a8fd94d75ba716bd",
+      "name": "lookup_incident",
+      "label": "Lookup Incident",
+      "varType": "reference",
+      "table": "incident",
+      "category": "vaInputs",
+      "nodeId": "6656323492f643f48439900069aae044",
+      "isHidden": false
+    },
+    "9da9d546d44b404ba6231a20c6bb24c3": {
+      "id": "9da9d546d44b404ba6231a20c6bb24c3",
+      "name": "update_incident",
+      "label": "Update Incident",
+      "varType": "reference",
+      "table": "incident",
+      "inactive": true,
+      "category": "vaInputs",
+      "nodeId": "d865252c443d41e78e4f8eb2d7afdebc",
+      "isHidden": false
+    },
+    "efa001df045d4884b13f7fb9f1397744": {
+      "id": "efa001df045d4884b13f7fb9f1397744",
+      "value": {
+        "mode": "script",
+        "value": "(function execute() {\n    if (vaContext.deviceType == 'ios' || vaContext.deviceType == 'android') \n        return 'mesp';\n    return gs.getProperty('sn_itsm_va.com.snc.itsm.virtualagent.portal_url');\n})()\n"
+      },
+      "name": "portalName",
+      "label": "portalName",
+      "varType": "script",
+      "category": "vaVars"
+    },
+    "6ba9688a022b4488953b0de1f25a55ea": {
+      "id": "6ba9688a022b4488953b0de1f25a55ea",
+      "value": {
+        "mode": "script",
+        "value": "(function execute() {\n    return vaContext.getRequesterLang();\n})()\n"
+      },
+      "name": "requesterLang",
+      "label": "requesterLang",
+      "varType": "script",
+      "category": "vaVars"
+    }
+  }
+}</graph>
+        <key_phrases>Resolve Incident Study,Resolve Incident</key_phrases>
+        <library>false</library>
+        <live_agent>false</live_agent>
+        <model_type>nlu_keyword</model_type>
+        <modify_confirmation_enabled>false</modify_confirmation_enabled>
+        <name>Resolve Incident Study</name>
+        <nlu_intent/>
+        <nlu_intent_label/>
+        <nlu_model/>
+        <nlu_model_label/>
+        <nlu_provider/>
+        <palette_label/>
+        <roles/>
+        <root_topic_id>5aede6907331201083c1e0dbc4f6a7b6</root_topic_id>
+        <secure_custom_input_control>false</secure_custom_input_control>
+        <source_topic_id>5aede6907331201083c1e0dbc4f6a7b6</source_topic_id>
+        <sys_class_name>sys_cb_topic</sys_class_name>
+        <sys_created_by>foco</sys_created_by>
+        <sys_created_on>2024-06-30 17:55:41</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_id>aa8adbe6830b0210cf05e030ceaad30d</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>Resolve Incident Study</sys_name>
+        <sys_package display_value="NeedIt" source="x_58872_needit">6ead8e780f603200cd674f8ce1050ed1</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="NeedIt">6ead8e780f603200cd674f8ce1050ed1</sys_scope>
+        <sys_update_name>sys_cb_topic_aa8adbe6830b0210cf05e030ceaad30d</sys_update_name>
+        <sys_updated_by>foco</sys_updated_by>
+        <sys_updated_on>2024-06-30 17:56:44</sys_updated_on>
+        <title>Resolve Incident Study</title>
+        <triggerable_by_notification>false</triggerable_by_notification>
+        <type>STANDARD</type>
+    </sys_cb_topic>
+    <sys_translated_text action="delete_multiple" query="documentkey=aa8adbe6830b0210cf05e030ceaad30d"/>
+</record_update>

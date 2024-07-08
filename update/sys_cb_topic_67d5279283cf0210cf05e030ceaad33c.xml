@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_cb_topic">
+    <sys_cb_topic action="INSERT_OR_UPDATE">
+        <applicability/>
+        <applicability_mode>query</applicability_mode>
+        <autopilot_topic>false</autopilot_topic>
+        <category/>
+        <channels/>
+        <connect_queue/>
+        <context_profiles/>
+        <description/>
+        <dialog_acts_enabled>false</dialog_acts_enabled>
+        <expose_on_palette>false</expose_on_palette>
+        <flexible_conversation_switching>true</flexible_conversation_switching>
+        <foundational>false</foundational>
+        <graph>{
+  "graph_api_version": "1.0.66",
+  "goals": {
+    "primary": {
+      "id": "primary",
+      "trigger": {
+        "type": "primary"
+      },
+      "name": "primary",
+      "applicability": "",
+      "description": "",
+      "nodes": {
+        "ff0ce7dfb3ac4e1ea8d7d43ce001dc61": {
+          "id": "ff0ce7dfb3ac4e1ea8d7d43ce001dc61",
+          "stepType": "Start",
+          "name": "Start",
+          "greetingResponse": {
+            "mode": "simple",
+            "value": ""
+          }
+        },
+        "9b2bc99c42b74705b8f8130f26195e05": {
+          "id": "9b2bc99c42b74705b8f8130f26195e05",
+          "stepType": "TerminateGoal",
+          "name": "End",
+          "confirmationMessage": {
+            "mode": "simple",
+            "value": ""
+          }
+        },
+        "e1c4819cec0c4c3c87ece7f4f7126380": {
+          "id": "e1c4819cec0c4c3c87ece7f4f7126380",
+          "stepType": "ReusableTopic",
+          "name": "Geolocation",
+          "fields": [],
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "useTemplateTopic": false,
+          "reusableTopicChoice": "Geolocation",
+          "reusableTopicId": "19b7784453022010b6e8ddeeff7b12da",
+          "inputs": {
+            "permissionprompt": {
+              "value": "Would you like to share your location?",
+              "mode": "simple",
+              "type": "String"
+            }
+          },
+          "outputs": [
+            {
+              "id": "b90d19af3ed641ca8f2b2172049e2299",
+              "value": "latitude",
+              "mapping": "latitude"
+            },
+            {
+              "id": "72ca517c0c534fad86043f2c66578fbd",
+              "value": "longitude",
+              "mapping": "longitude"
+            },
+            {
+              "id": "08b264c2947442309affac5db79947cb",
+              "value": "errormessage",
+              "mapping": "errormessage"
+            },
+            {
+              "id": "b07fced988f442c887618166e056d658",
+              "value": "errortype",
+              "mapping": "errortype"
+            },
+            {
+              "id": "0cd437192ae54e2d99574586baddd636",
+              "value": "status",
+              "mapping": "status"
+            }
+          ],
+          "variableIds": [
+            "b90d19af3ed641ca8f2b2172049e2299",
+            "72ca517c0c534fad86043f2c66578fbd",
+            "08b264c2947442309affac5db79947cb",
+            "b07fced988f442c887618166e056d658",
+            "0cd437192ae54e2d99574586baddd636"
+          ],
+          "dynamicTopicBlockName": {
+            "value": "",
+            "mode": "simple"
+          },
+          "inputDynamicModal": {},
+          "outputDynamicModal": {}
+        }
+      },
+      "edges": [
+        {
+          "id": "6a8cdf109dd741789d70939803ed1536",
+          "edgeType": "Edge",
+          "source": "ff0ce7dfb3ac4e1ea8d7d43ce001dc61",
+          "target": "e1c4819cec0c4c3c87ece7f4f7126380",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "dd7f71a7842b45e1afc176481c8397c9",
+          "edgeType": "Edge",
+          "source": "e1c4819cec0c4c3c87ece7f4f7126380",
+          "target": "9b2bc99c42b74705b8f8130f26195e05",
+          "sourcePort": "",
+          "targetPort": ""
+        }
+      ]
+    }
+  },
+  "variables": {
+    "current-user": {
+      "category": "vaInputs",
+      "id": "current-user",
+      "label": "User",
+      "name": "user",
+      "table": "sys_user",
+      "varType": "reference"
+    },
+    "b90d19af3ed641ca8f2b2172049e2299": {
+      "id": "b90d19af3ed641ca8f2b2172049e2299",
+      "name": "latitude",
+      "label": "Latitude",
+      "defaultValue": "latitude",
+      "varType": "string",
+      "category": "vaInputs",
+      "metadata": {
+        "libraryMappingType": "output"
+      },
+      "nodeId": "e1c4819cec0c4c3c87ece7f4f7126380",
+      "isHidden": false
+    },
+    "72ca517c0c534fad86043f2c66578fbd": {
+      "id": "72ca517c0c534fad86043f2c66578fbd",
+      "name": "longitude",
+      "label": "Longitude",
+      "defaultValue": "longitude",
+      "varType": "string",
+      "category": "vaInputs",
+      "metadata": {
+        "libraryMappingType": "output"
+      },
+      "nodeId": "e1c4819cec0c4c3c87ece7f4f7126380",
+      "isHidden": false
+    },
+    "08b264c2947442309affac5db79947cb": {
+      "id": "08b264c2947442309affac5db79947cb",
+      "name": "errormessage",
+      "label": "Errormessage",
+      "defaultValue": "errormessage",
+      "varType": "string",
+      "category": "vaInputs",
+      "metadata": {
+        "libraryMappingType": "output"
+      },
+      "nodeId": "e1c4819cec0c4c3c87ece7f4f7126380",
+      "isHidden": false
+    },
+    "b07fced988f442c887618166e056d658": {
+      "id": "b07fced988f442c887618166e056d658",
+      "name": "errortype",
+      "label": "Errortype",
+      "defaultValue": "errortype",
+      "varType": "string",
+      "category": "vaInputs",
+      "metadata": {
+        "libraryMappingType": "output"
+      },
+      "nodeId": "e1c4819cec0c4c3c87ece7f4f7126380",
+      "isHidden": false
+    },
+    "0cd437192ae54e2d99574586baddd636": {
+      "id": "0cd437192ae54e2d99574586baddd636",
+      "name": "status",
+      "label": "Status",
+      "defaultValue": "status",
+      "varType": "string",
+      "category": "vaInputs",
+      "metadata": {
+        "libraryMappingType": "output"
+      },
+      "nodeId": "e1c4819cec0c4c3c87ece7f4f7126380",
+      "isHidden": false
+    }
+  }
+}</graph>
+        <key_phrases/>
+        <library>true</library>
+        <live_agent>false</live_agent>
+        <model_type>nlu_keyword</model_type>
+        <modify_confirmation_enabled>false</modify_confirmation_enabled>
+        <name>Topico teste geolocation</name>
+        <nlu_intent/>
+        <nlu_intent_label/>
+        <nlu_model/>
+        <nlu_model_label/>
+        <nlu_provider/>
+        <palette_label/>
+        <roles/>
+        <root_topic_id/>
+        <secure_custom_input_control>false</secure_custom_input_control>
+        <source_topic_id/>
+        <sys_class_name>sys_cb_topic</sys_class_name>
+        <sys_created_by>foco</sys_created_by>
+        <sys_created_on>2024-06-30 00:06:41</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_id>67d5279283cf0210cf05e030ceaad33c</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>Topico teste geolocation</sys_name>
+        <sys_package display_value="NeedIt" source="x_58872_needit">6ead8e780f603200cd674f8ce1050ed1</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="NeedIt">6ead8e780f603200cd674f8ce1050ed1</sys_scope>
+        <sys_update_name>sys_cb_topic_67d5279283cf0210cf05e030ceaad33c</sys_update_name>
+        <sys_updated_by>foco</sys_updated_by>
+        <sys_updated_on>2024-06-30 00:10:13</sys_updated_on>
+        <title>Topico teste geolocation</title>
+        <triggerable_by_notification>false</triggerable_by_notification>
+        <type>TOPIC_BLOCK</type>
+    </sys_cb_topic>
+    <sys_translated_text action="delete_multiple" query="documentkey=67d5279283cf0210cf05e030ceaad33c"/>
+</record_update>

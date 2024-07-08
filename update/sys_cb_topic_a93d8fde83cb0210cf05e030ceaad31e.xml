@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_cb_topic">
+    <sys_cb_topic action="INSERT_OR_UPDATE">
+        <applicability/>
+        <applicability_mode>query</applicability_mode>
+        <autopilot_topic>false</autopilot_topic>
+        <category/>
+        <channels/>
+        <connect_queue/>
+        <context_profiles/>
+        <description/>
+        <dialog_acts_enabled>false</dialog_acts_enabled>
+        <expose_on_palette>false</expose_on_palette>
+        <flexible_conversation_switching>false</flexible_conversation_switching>
+        <foundational>false</foundational>
+        <graph>{
+  "graph_api_version": "1.0.66",
+  "goals": {
+    "primary": {
+      "id": "primary",
+      "trigger": {
+        "type": "primary"
+      },
+      "name": "primary",
+      "applicability": "",
+      "description": "",
+      "nodes": {
+        "858841268df74aa4bda42c18a8b9a3ff": {
+          "id": "858841268df74aa4bda42c18a8b9a3ff",
+          "stepType": "Start",
+          "name": "Start",
+          "greetingResponse": {
+            "value": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "text": "OLA "
+                  },
+                  {
+                    "type": "datapill",
+                    "dataPill": {
+                      "value": "{{vaInputs.user.name}}",
+                      "displayValue": "Input Variables➛User➛Name"
+                    },
+                    "children": [
+                      {
+                        "text": ""
+                      }
+                    ]
+                  },
+                  {
+                    "text": ", TUDO BEM ? EM QUE POSSO AJUDAR ? "
+                  }
+                ]
+              }
+            ],
+            "mode": "simple"
+          }
+        },
+        "cc53f2dfdcf34512b3b759b014b4c3e6": {
+          "id": "cc53f2dfdcf34512b3b759b014b4c3e6",
+          "stepType": "TerminateGoal",
+          "name": "End",
+          "confirmationMessage": {
+            "mode": "simple",
+            "value": ""
+          }
+        }
+      },
+      "edges": [
+        {
+          "id": "afccb4dae7524f06b6f7dcae53414233",
+          "edgeType": "Edge",
+          "source": "858841268df74aa4bda42c18a8b9a3ff",
+          "target": "cc53f2dfdcf34512b3b759b014b4c3e6",
+          "sourcePort": "",
+          "targetPort": ""
+        }
+      ]
+    }
+  },
+  "variables": {
+    "current-user": {
+      "category": "vaInputs",
+      "id": "current-user",
+      "label": "User",
+      "name": "user",
+      "table": "sys_user",
+      "varType": "reference"
+    }
+  }
+}</graph>
+        <key_phrases>Teste Topic [sys_cs_topic] v2</key_phrases>
+        <library>false</library>
+        <live_agent>false</live_agent>
+        <model_type>nlu_keyword</model_type>
+        <modify_confirmation_enabled>false</modify_confirmation_enabled>
+        <name>Teste Topic [sys_cs_topic] v2</name>
+        <nlu_intent/>
+        <nlu_intent_label/>
+        <nlu_model/>
+        <nlu_model_label/>
+        <nlu_provider/>
+        <palette_label/>
+        <roles/>
+        <root_topic_id/>
+        <secure_custom_input_control>false</secure_custom_input_control>
+        <source_topic_id/>
+        <sys_class_name>sys_cb_topic</sys_class_name>
+        <sys_created_by>foco</sys_created_by>
+        <sys_created_on>2024-06-29 22:18:57</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_id>a93d8fde83cb0210cf05e030ceaad31e</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>Teste Topic [sys_cs_topic] v2</sys_name>
+        <sys_package display_value="NeedIt" source="x_58872_needit">6ead8e780f603200cd674f8ce1050ed1</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="NeedIt">6ead8e780f603200cd674f8ce1050ed1</sys_scope>
+        <sys_update_name>sys_cb_topic_a93d8fde83cb0210cf05e030ceaad31e</sys_update_name>
+        <sys_updated_by>foco</sys_updated_by>
+        <sys_updated_on>2024-06-29 22:24:12</sys_updated_on>
+        <title>Teste Topic [sys_cs_topic] v2</title>
+        <triggerable_by_notification>false</triggerable_by_notification>
+        <type>STANDARD</type>
+    </sys_cb_topic>
+    <sys_translated_text action="delete_multiple" query="documentkey=a93d8fde83cb0210cf05e030ceaad31e"/>
+</record_update>
